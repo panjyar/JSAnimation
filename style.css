@@ -2,124 +2,178 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-body {
+  }
+  
+  body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
     transition: background-color 0.5s ease;
-}
-
-.container {
+  }
+  
+  .container {
     display: flex;
     height: 100vh;
-    /* position: relative; */
-}
-
-.leftContainer {
+    position: relative;
+  }
+  
+  .leftContainer {
     flex: 1;
-    /* display: flex; */
-    /* flex-direction: column; */
-    /* justify-content: center; */
-    /* padding: 0 2rem; */
-    /* z-index: 3; */
-}
-
-.pathContent {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .midContainer {
     position: absolute;
-  top: 50%;
-  left: 30%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  /* color: white; */
-}
-
-.pathContent h4 {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
+  }
+  
+  #transring {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .pathContent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+  }
+  
+  .pathContent h4 {
     margin: 0;
     font-size: 1.2rem;
-}
-
-.pathContent h1 {
+  }
+  
+  .pathContent h1 {
     margin: 0.5rem 0;
     font-size: 2.5rem;
-}
+  }
+  
 
-.pathContent span {
-    color: #007bff;
-}
-
-/* .svgPath {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    max-width: 414px;
-    z-index: 1;
-    background-color: #c2cad2;
-} */
-
-/* .svgPath svg {
-    width: 100%;
-    height: 50px;
-    background-color: #c2cad2;
-} */
-
-.buttomLeftContainer {
-    position: absolute;
-  bottom: 50px;
-  left: 50px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-
-  /* width: calc(100% - 100px); */
-}
-
-.buttomLeftContainer a {
-    text-decoration: none;
-    color: rgb(212, 212, 212);
-}
-.company-info {
+  
+  .company-info {
     position: absolute;
     bottom: 100px;
     left: 50px;
     color: white;
   }
   
-
-.rightContainer {
+  .buttomLeftContainer {
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+  }
+  
+  .buttomLeftContainer a, .skip-button a {
+    text-decoration: none;
+    color: rgb(212, 212, 212);
+  }
+  
+  .skip-button {
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+  }
+  
+  .rightContainer {
     flex: 1;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 3fr);
+    grid-template-rows: repeat(3, 2fr);
     gap: 1rem;
     padding: 2rem;
     z-index: 1;
-}
-
-.rightContainer img {
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .rightContainer img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-
-.rightContainer img:nth-child(5) {
-    grid-column: 2;
-    grid-row: 2;
-}
-
-.midContainer{
-    position: absolute;
-    top: 43%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  }
+  
+  .chat-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    z-index: 1000;
+  }
+  
+  .chat-icon img {
     width: 100%;
-    max-width: 600px;
-    z-index: 4;
-    background-color: #107ae3;
-    border-radius: 50% !important;
-    opacity: 0.5;
-}
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  @media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        height: auto; /* Allow container to adjust height based on content */
+      }
+    
+      .rightContainer {
+        order: 1;
+        width: 100%;
+        height: auto; /* Adjust height based on content */
+      }
+    
+      .leftContainer {
+        order: 2;
+        width: 100%;
+        height: auto; /* Adjust height based on content */
+      }
+    
+      .midContainer {
+        display: none;
+      }
+    
+      .rightContainer {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 1rem;
+      }
+    
+      .rightContainer img {
+        width: 100%;
+        height: auto;
+        margin-bottom: 1rem;
+      }
+    
+      .leftContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+      }
+    
+      .pathContent {
+        position: static;
+        transform: none;
+        text-align: left;
+        margin: 1rem 0;
+      }
+    
+      .pathContent h4 {
+        font-size: 1rem;
+      }
+    
+      .pathContent h1 {
+        font-size: 2rem;
+      }
+    .chat-icon{
+        display: none;
+    }
+  }
