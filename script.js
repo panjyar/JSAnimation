@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
       rightContainer.style.backgroundImage = 'none';
     }
 
-    // Update the text content
+    // Update text content
     const h4 = pathContent.querySelector('h4');
     const h1 = pathContent.querySelector('h1');
     const p = pathContent.querySelector('p');
@@ -135,19 +135,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Update the images
+    // Update images
     updateImages(content.images);
 
-    // Update the SVG path
+    // Update SVG path
     updateSVGPath(index);
   }
 
   function updateImages(images) {
-    // Remove existing images
     const swiperWrapper = document.querySelector('.swiper-wrapper');
     swiperWrapper.innerHTML = '';
 
-    // Define custom animations for each image index
     const animations = [
       { x: -100, y: -100, opacity: 0, duration: 0.5 },
       { scale: 0, opacity: 0, duration: 0.5 },
@@ -157,33 +155,29 @@ document.addEventListener('DOMContentLoaded', () => {
       { skewX: 20, opacity: 0, duration: 0.5 }
     ];
 
-    // Add new images with custom animations
     images.forEach((imgData, i) => {
       const swiperSlide = document.createElement('div');
       swiperSlide.classList.add('swiper-slide');
-      
+
       const imgContainer = document.createElement('div');
       imgContainer.classList.add('image-container');
       imgContainer.style.position = 'absolute';
       imgContainer.style.overflow = 'hidden';
-      
+
       const img = document.createElement('img');
       img.src = imgData.src;
       img.style.width = '100%';
       img.style.height = '100%';
       img.style.objectFit = 'contain';
-      
-      // Apply custom styles to the container
+
       Object.assign(imgContainer.style, imgData.style);
       
       imgContainer.appendChild(img);
       swiperSlide.appendChild(imgContainer);
       swiperWrapper.appendChild(swiperSlide);
 
-      // Get the animation config for the current index
       const anim = animations[i % animations.length];
 
-      // Apply the animation
       gsap.from(imgContainer, {
         ...anim,
         delay: i * 0.1,
@@ -193,25 +187,34 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // Reinitialize Swiper after updating slides
-    if (swiper) {
-      swiper.update();
-    }
+    
   }
 
   function updateSVGPath(index) {
-    const totalPaths = contents.length;
     const pathLength = opaquePath.getTotalLength();
-    const dashLength = pathLength / totalPaths;
-    const dashOffset = dashLength * index;
+    const segmentLength = pathLength / (dots.length - 1);
+    const dashOffset = pathLength - (segmentLength * index);
 
     gsap.to(opaquePath, {
+      strokeDasharray: pathLength,
       strokeDashoffset: dashOffset,
       duration: 0.5,
-      ease: 'power2.inOut'
+      ease: "power2.out"
+    });
+
+    dots.forEach((dot, i) => {
+      const fill = dot.querySelector('.dotsst');
+      const stroke = dot.querySelector(`[class^="dotsstro"]`);
+      
+      if (i <= index) {
+        gsap.to(fill, { fill: '#ffffff', duration: 0.3 });
+        gsap.to(stroke, { stroke: '#ffffff', duration: 0.3 });
+      } else {
+        gsap.to(fill, { fill: contents[index].background.deep, duration: 0.3 });
+        gsap.to(stroke, { stroke: '#ffffff', duration: 0.3 });
+      }
     });
   }
-
   function handleSVGClick(e) {
     const clickedDot = e.target.closest('.dots-nav');
     if (clickedDot) {
@@ -223,25 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Add click event listener to the SVG
   svg.addEventListener('click', handleSVGClick);
 
-  // Initialize Swiper
-  const swiper = new Swiper('.swiper-container', {
-    direction: 'horizontal',
-    loop: true,
-    pagination: {
-      el: '.swiper-pagination.desktop-dots',
-      clickable: true,
-    },
-    on: {
-      slideChange: function () {
-        currentContentIndex = this.realIndex;
-        updateContent(currentContentIndex);
-      },
-    },
-  });
-
-  // Initialize with the first content
   updateContent(currentContentIndex);
 });
