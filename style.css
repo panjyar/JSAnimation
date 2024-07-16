@@ -29,7 +29,7 @@
   .midContainer {
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 70%;
     transform: translate(-50%, -50%);
     width: 300px;
     height: 300px;
@@ -118,62 +118,77 @@
     object-fit: cover;
     border-radius: 50%;
   }
+ 
   @media (max-width: 768px) {
-    .container {
-        flex-direction: column;
-        height: auto; /* Allow container to adjust height based on content */
-      }
-    
-      .rightContainer {
-        order: 1;
-        width: 100%;
-        height: auto; /* Adjust height based on content */
-      }
-    
-      .leftContainer {
-        order: 2;
-        width: 100%;
-        height: auto; /* Adjust height based on content */
-      }
-    
-      .midContainer {
-        display: none;
-      }
-    
-      .rightContainer {
-        display: flex;
-        flex-wrap: wrap;
-        padding: 1rem;
-      }
-    
-      .rightContainer img {
-        width: 100%;
-        height: auto;
-        margin-bottom: 1rem;
-      }
-    
-      .leftContainer {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 1rem;
-      }
-    
-      .pathContent {
-        position: static;
-        transform: none;
-        text-align: left;
-        margin: 1rem 0;
-      }
-    
-      .pathContent h4 {
-        font-size: 1rem;
-      }
-    
-      .pathContent h1 {
-        font-size: 2rem;
-      }
-    .chat-icon{
-        display: none;
+    .rightContainer{
+      order:1;
     }
+    .leftContainer{
+      order: 2;
+    }
+    .container{
+      display: flex;
+      flex-direction: column;
+    }
+    .chat-icon, .midContainer{
+      display: none;
+    }
+    .company-info {
+      position: absolute;
+      bottom: 100px;
+      left: 50px;
+      text-align: left;
+    }
+    .buttomLeftContainer {
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+  }
+
+  .skip-button {
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+  }
+
+ 
+
+  .desktop-dots {
+    display: flex;
+    flex-direction: row;
+    /* position: absolute; */
+    /* bottom: 10px; */
+    /* left: 50%; */
+    transform: translateX(-50%);
+  }
+  .carousel {
+    position: relative; /* Ensure positioning context */
+  }
+  
+  .dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Space above the dots */
+    position: absolute; /* Positioning dots relative to the carousel */
+    bottom: 10px;      /* Distance from the bottom of the carousel */
+    left: 50%;         /* Center horizontally */
+    transform: translateX(-50%); /* Adjust for centering */
+  }
+  
+  /* Individual dot */
+  .dot {
+    width: 12px;
+    height: 12px;
+    margin: 0 5px;
+    background-color: #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  /* Active dot */
+  .dot.active {
+    background-color: #333;
+  }
+  
   }

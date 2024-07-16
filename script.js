@@ -144,13 +144,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateImages(images) {
     // Remove existing images
-    rightContainer.innerHTML = '';
+    const swiperWrapper = document.querySelector('.swiper-wrapper');
+    swiperWrapper.innerHTML = '';
 
     // Define custom animations for each image index
     const animations = [
       { x: -100, y: -100, opacity: 0, duration: 0.5 },
       { scale: 0, opacity: 0, duration: 0.5 },
-      {  opacity: 0, duration: 0.5 },
+      { opacity: 0, duration: 0.5 },
       { y: 100, opacity: 0, duration: 0.5 },
       { x: 100, y: 100, opacity: 0, duration: 0.5 },
       { skewX: 20, opacity: 0, duration: 0.5 }
@@ -158,7 +159,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add new images with custom animations
     images.forEach((imgData, i) => {
+      const swiperSlide = document.createElement('div');
+      swiperSlide.classList.add('swiper-slide');
+      
       const imgContainer = document.createElement('div');
+      imgContainer.classList.add('image-container');
       imgContainer.style.position = 'absolute';
       imgContainer.style.overflow = 'hidden';
       
@@ -172,7 +177,8 @@ document.addEventListener('DOMContentLoaded', () => {
       Object.assign(imgContainer.style, imgData.style);
       
       imgContainer.appendChild(img);
-      rightContainer.appendChild(imgContainer);
+      swiperSlide.appendChild(imgContainer);
+      swiperWrapper.appendChild(swiperSlide);
 
       // Get the animation config for the current index
       const anim = animations[i % animations.length];
@@ -186,6 +192,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     });
+
+    // Reinitialize Swiper after updating slides
+    if (swiper) {
+      swiper.update();
+    }
   }
 
   function updateSVGPath(index) {
@@ -214,6 +225,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Add click event listener to the SVG
   svg.addEventListener('click', handleSVGClick);
+
+  // Initialize Swiper
+  const swiper = new Swiper('.swiper-container', {
+    direction: 'horizontal',
+    loop: true,
+    pagination: {
+      el: '.swiper-pagination.desktop-dots',
+      clickable: true,
+    },
+    on: {
+      slideChange: function () {
+        currentContentIndex = this.realIndex;
+        updateContent(currentContentIndex);
+      },
+    },
+  });
 
   // Initialize with the first content
   updateContent(currentContentIndex);
